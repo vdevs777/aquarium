@@ -1,0 +1,26 @@
+# Node.js with React
+# Build a Node.js project that uses React.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- powershell: |
+      Write-Host "My first secret variable is $env:FOO_ONE"
+      $env:FOO_ONE -eq "foo"
+  env:
+    FOO_ONE: $(SecretOne)
+- bash: |
+    echo "My second secret variable: $FOO_TWO"
+    if [ "$FOO_TWO" = "bar" ]; then
+        echo "Strings are equal."
+    else
+        echo "Strings are not equal."
+    fi
+  env:
+    FOO_TWO: $(SecretTwo) 
